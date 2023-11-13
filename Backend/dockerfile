@@ -1,0 +1,3 @@
+FROM adoptopenjdk/openjdk11
+COPY ./target/DevOps_Project-1.0.jar app.jar
+CMD ["java","-jar","app.jar"]
