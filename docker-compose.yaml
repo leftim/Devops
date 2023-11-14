@@ -1,0 +1,43 @@
+version: '3'
+
+services:
+  # MySQL service
+  mysql:
+    image: mysql:latest
+    container_name: mysql
+    environment:
+      MYSQL_USER: admin
+      MYSQL_ROOT_PASSWORD: admin
+      MYSQL_DATABASE: devops
+    ports:
+      - "3306:3306"
+    networks:
+      - devopsnetwork
+    volumes:
+      - mysql-data:/var/lib/mysql
+
+  # Spring Boot service
+  springboot-app:
+    image: fatmahaija/devops:backend
+    ports:
+      - "8082:8082"
+    depends_on:
+      - mysql
+    networks:
+      - devopsnetwork
+
+  # Angular service
+  angular-app:
+    image: fatmahaija/devops:frontend
+    ports:
+      - "80:80"
+    depends_on:
+      - springboot-app
+    networks:
+      - devopsnetwork
+
+networks:
+  devopsnetwork:
+
+volumes:
+  mysql-data:
