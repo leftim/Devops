@@ -4,9 +4,9 @@ services:
   # MySQL service
   mysql:
     image: mysql:latest
+    restart: always
     container_name: mysql
     environment:
-      MYSQL_USER: admin
       MYSQL_ROOT_PASSWORD: admin
       MYSQL_DATABASE: devops
     ports:
@@ -19,6 +19,12 @@ services:
   # Spring Boot service
   springboot-app:
     image: fatmahaija/devops:backend
+    restart: on-failure
+    environment:
+      SPRING_DATASOURCE_URL: "jdbc:mysql://mysql:3306/devops?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC"
+      SPRING_DATASOURCE_USERNAME: "root"
+      SPRING_DATASOURCE_PASSWORD: "admin"
+      SPRING_JPA_HIBERNATE_DDL-AUTO: "update"
     ports:
       - "8082:8082"
     depends_on:
@@ -30,7 +36,7 @@ services:
   angular-app:
     image: fatmahaija/devops:frontend
     ports:
-      - "80:80"
+      - "4200:4200"
     depends_on:
       - springboot-app
     networks:
