@@ -7,7 +7,7 @@ services:
       - "9090:9090"
     command: --config.file=/config/prometheus.yml
     volumes:
-      - ./config/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - /etc/prometheus/prometheus.yml:./config/prometheus.yml
       
 
   grafana:
