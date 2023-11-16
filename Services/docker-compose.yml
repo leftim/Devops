@@ -6,9 +6,10 @@ services:
     ports:
       - "9090:9090"
     command:
-      - "--config.file=/etc/prometheus/prometheus.yml"
+      - "--config.file=${PWD}/Services/prometheus.yml"
     volumes:
       - ./prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      
 
   grafana:
     image: grafana/grafana
